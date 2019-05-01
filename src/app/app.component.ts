@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
+import { HnBaseComponent } from './shared/base-component';
 
 @Component({
-  selector: 'app-root',
+  selector: 'hn-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  title = 'helixlab-angular-iv';
+export class AppComponent extends HnBaseComponent {
+  constructor() {
+    super();
+  }
 }
