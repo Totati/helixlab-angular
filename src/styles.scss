@@ -13,3 +13,10 @@ body {
 .hn-padding {
   padding: $hn-padding;
 }
+
+.hn-fab-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: $hn-padding;
+}

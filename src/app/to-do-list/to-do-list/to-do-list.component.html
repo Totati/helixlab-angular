@@ -1,3 +1,8 @@
-<p>
-  to-do-list works!
-</p>
+<div class="scroll-container">
+  <p>
+    to-do-list works!
+  </p>
+</div>
+<div class="hn-fab-container" *ngIf="isAddVisible">
+  <button mat-fab (click)="onAdd()"><mat-icon>add</mat-icon></button>
+</div>
