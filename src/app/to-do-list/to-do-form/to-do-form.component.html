@@ -1,3 +1,12 @@
-<p>
-  to-do-form works!
-</p>
+<h2 mat-dialog-title>Add todo</h2>
+<form id="add-todo-form" (submit)="onSubmit()" [formGroup]="fg" mat-dialog-content fxLayout="column" autocomplete="off">
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea appearance="standard" formControlName="description" matInput required cdkTextareaAutosize cdkAutosizeMaxRows="4"></textarea>
+    <mat-hint>This field is required</mat-hint>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions align="end">
+  <button type="button" mat-button mat-dialog-close>Cancel</button>
+  <button mat-button color="primary" form="add-todo-form">Add</button>
+</div>

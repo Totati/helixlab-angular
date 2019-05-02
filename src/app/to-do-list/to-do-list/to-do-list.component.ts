@@ -6,6 +6,8 @@ import { ToDoFormComponent } from '../to-do-form/to-do-form.component';
 import { ScrollVisibilityService } from '../services/scroll-visibility.service';
 import { ToDoService } from '../services/to-do.service';
 import { ToDoList } from 'src/app/shared/model/to-do-list.model';
+import { ToDo } from 'src/app/shared/model/to-do.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'hn-to-do-list',
@@ -17,13 +19,16 @@ export class ToDoListComponent extends HnBaseComponent implements OnInit {
     private _toDoListService: ToDoListService,
     private _toDoService: ToDoService,
     private _dialog: MatDialog,
-    private _scrollVisibilityService: ScrollVisibilityService
+    private _scrollVisibilityService: ScrollVisibilityService,
+    private _route: ActivatedRoute,
+    private _router: Router
   ) {
     super();
   }
 
   isAddVisible = true;
-  toDos: any[];
+  focusTodoListName = false;
+  toDos: ToDo[];
   toDoList: ToDoList;
 
   @HostListener('scroll', ['$event'])
@@ -32,10 +37,27 @@ export class ToDoListComponent extends HnBaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.toDos = this._toDoListService.getAll();
+    this._route.queryParams.subscribe(query => {
+      this.toDoList = this._toDoListService.get(+query.toDoListId);
+      if (!this.toDoList) {
+        this._router.navigate(['/home']);
+        return;
+      }
+      this.toDos = this._toDoService.getAllByToDoListId(+query.toDoListId);
+    });
   }
 
   onAdd() {
-    this._dialog.open(ToDoFormComponent);
+    this._dialog
+      .open(ToDoFormComponent, {
+        width: '250px',
+      })
+      .afterClosed()
+      .subscribe(data => {
+        if (data) {
+          this._toDoService.add(new ToDo(0, this.toDoList.id, data.description));
+          this.toDos = this._toDoService.getAllByToDoListId(this.toDoList.id);
+        }
+      });
   }
 }

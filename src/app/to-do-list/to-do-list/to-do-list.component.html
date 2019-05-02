@@ -1,9 +1,15 @@
 <mat-toolbar color="primary">
-  <mat-form-field>
-    <input type="text" matInput (ngModel)="(toDoList.name)" />
+  <mat-form-field appearance="standard" *ngIf="toDoList">
+    <input type="text" matInput [(ngModel)]="toDoList.name" />
   </mat-form-field>
 </mat-toolbar>
-<div class="scroll-container"></div>
+
+<mat-list>
+  <mat-list-item *ngFor="let todo of toDos; last as last">
+    <hn-to-do [todo]="todo"></hn-to-do>
+    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+  </mat-list-item>
+</mat-list>
 <div class="hn-fab-container" *ngIf="isAddVisible">
   <button mat-fab (click)="onAdd()"><mat-icon>add</mat-icon></button>
 </div>

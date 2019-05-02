@@ -21,6 +21,8 @@ export class SidenavListComponent extends HnBaseComponent implements OnInit {
   onNewList() {
     this._toDoListService.create();
     this.toDoLists = this._toDoListService.getAll();
-    this._router.navigate(['/todos'], { queryParams: { toDoListId: this.toDoLists[this.toDoLists.length - 1].id } });
+    this._router.navigate(['/todos'], {
+      queryParams: { toDoListId: this.toDoLists[this.toDoLists.length - 1].id },
+    });
   }
 }
