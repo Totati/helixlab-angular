@@ -1,0 +1,13 @@
+<mat-nav-list>
+  <a
+    mat-list-item
+    [routerLink]="['/todos']"
+    [queryParams]="{ toDoListId: toDoList.id }"
+    routerLinkActive="router-link-active"
+    *ngFor="let toDoList of toDoLists"
+    >{{ toDoList.name }}</a
+  >
+</mat-nav-list>
+<mat-action-list>
+  <button mat-list-item (click)="onNewList()"><mat-icon>add</mat-icon> New list</button>
+</mat-action-list>

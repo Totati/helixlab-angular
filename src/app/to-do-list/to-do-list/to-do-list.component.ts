@@ -1,8 +1,11 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { ToDoListService } from 'src/app/services/to-do-list.service';
+import { ToDoListService } from 'src/app/shared/services/to-do-list.service';
 import { HnBaseComponent } from 'src/app/shared/base-component';
 import { MatDialog } from '@angular/material/dialog';
 import { ToDoFormComponent } from '../to-do-form/to-do-form.component';
+import { ScrollVisibilityService } from '../services/scroll-visibility.service';
+import { ToDoService } from '../services/to-do.service';
+import { ToDoList } from 'src/app/shared/model/to-do-list.model';
 
 @Component({
   selector: 'hn-to-do-list',
@@ -10,19 +13,22 @@ import { ToDoFormComponent } from '../to-do-form/to-do-form.component';
   styleUrls: ['./to-do-list.component.scss'],
 })
 export class ToDoListComponent extends HnBaseComponent implements OnInit {
-  constructor(private _toDoListService: ToDoListService, private _dialog: MatDialog) {
+  constructor(
+    private _toDoListService: ToDoListService,
+    private _toDoService: ToDoService,
+    private _dialog: MatDialog,
+    private _scrollVisibilityService: ScrollVisibilityService
+  ) {
     super();
   }
 
   isAddVisible = true;
-  previousScroll = 0;
-
   toDos: any[];
+  toDoList: ToDoList;
 
   @HostListener('scroll', ['$event'])
-  onScroll($event: UIEvent) {
-    this.isAddVisible = this.previousScroll - $event.target.scrollTop > 0;
-    this.previousScroll = $event.target.scrollTop;
+  onScroll($event: Event) {
+    this.isAddVisible = this._scrollVisibilityService.isVisible($event);
   }
 
   ngOnInit() {

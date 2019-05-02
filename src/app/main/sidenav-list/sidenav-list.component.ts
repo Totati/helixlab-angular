@@ -1,6 +1,6 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
-import { HnBaseComponent } from '../shared/base-component';
-import { ToDoListService } from '../services/to-do-list.service';
+import { HnBaseComponent } from '../../shared/base-component';
+import { ToDoListService } from '../../shared/services/to-do-list.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,6 +21,6 @@ export class SidenavListComponent extends HnBaseComponent implements OnInit {
   onNewList() {
     this._toDoListService.create();
     this.toDoLists = this._toDoListService.getAll();
-    this._router.navigate(['/todos', this.toDoLists[this.toDoLists.length - 1].id]);
+    this._router.navigate(['/todos'], { queryParams: { toDoListId: this.toDoLists[this.toDoLists.length - 1].id } });
   }
 }

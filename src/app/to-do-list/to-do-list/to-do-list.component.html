@@ -1,8 +1,9 @@
-<div class="scroll-container">
-  <p>
-    to-do-list works!
-  </p>
-</div>
+<mat-toolbar color="primary">
+  <mat-form-field>
+    <input type="text" matInput (ngModel)="(toDoList.name)" />
+  </mat-form-field>
+</mat-toolbar>
+<div class="scroll-container"></div>
 <div class="hn-fab-container" *ngIf="isAddVisible">
   <button mat-fab (click)="onAdd()"><mat-icon>add</mat-icon></button>
 </div>

@@ -4,7 +4,7 @@ import { ToDoListComponent } from './to-do-list/to-do-list.component';
 
 const routes: Routes = [
   {
-    path: ':id',
+    path: '',
     component: ToDoListComponent,
   },
 ];

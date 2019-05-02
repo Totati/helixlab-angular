@@ -1,6 +1,0 @@
-<mat-action-list>
-  <a mat-list-item [routerLink]="['/todos', toDoList.id]" routerLinkActive="router-link-active" *ngFor="let toDoList of toDoLists">{{
-    toDoList.name
-  }}</a>
-  <button mat-list-item (click)="onNewList()"><mat-icon>add</mat-icon> New list</button>
-</mat-action-list>
