@@ -1,11 +1,11 @@
 <mat-sidenav-container>
   <mat-sidenav mode="side" opened>
     <mat-toolbar color="primary">
-      <h1>Helix To-Do</h1>
+      <a mat-button [routerLink]="['/home']" routerLinkActive="router-link-active">
+        Helix To-Do
+      </a>
     </mat-toolbar>
     <hn-sidenav-list></hn-sidenav-list>
   </mat-sidenav>
-  <mat-sidenav-content fxLayout="column">
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
+  <router-outlet></router-outlet>
 </mat-sidenav-container>

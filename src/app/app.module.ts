@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './main/home/home.component';
 import { NotFoundComponent } from './main/not-found/not-found.component';
 import { SidenavListComponent } from './main/sidenav-list/sidenav-list.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotFoundComponent, SidenavListComponent],
@@ -22,6 +23,7 @@ import { SidenavListComponent } from './main/sidenav-list/sidenav-list.component
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
+    MatButtonModule,
     MatIconModule,
     FlexLayoutModule,
   ],

@@ -2,6 +2,8 @@ import { Component, OnInit, DoCheck } from '@angular/core';
 import { HnBaseComponent } from '../../shared/base-component';
 import { ToDoListService } from '../../shared/services/to-do-list.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { ToDoList } from 'src/app/shared/model/to-do-list.model';
 
 @Component({
   selector: 'hn-sidenav-list',
@@ -9,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidenav-list.component.scss'],
 })
 export class SidenavListComponent extends HnBaseComponent implements OnInit {
-  toDoLists: any[];
+  toDoLists: Observable<ToDoList[]>;
   constructor(private _toDoListService: ToDoListService, private _router: Router) {
     super();
   }
@@ -19,10 +21,8 @@ export class SidenavListComponent extends HnBaseComponent implements OnInit {
   }
 
   onNewList() {
-    this._toDoListService.create();
-    this.toDoLists = this._toDoListService.getAll();
-    this._router.navigate(['/todos'], {
-      queryParams: { toDoListId: this.toDoLists[this.toDoLists.length - 1].id },
+    this._toDoListService.create().subscribe(toDoList => {
+      this._router.navigate(['todos'], { queryParams: { toDoListId: toDoList.id } });
     });
   }
 }

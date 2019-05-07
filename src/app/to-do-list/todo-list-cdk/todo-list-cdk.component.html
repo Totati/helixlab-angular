@@ -4,7 +4,7 @@
   </mat-form-field>
 </mat-toolbar>
 
-<mat-list>
+<mat-list #matList>
   <mat-list-item *ngFor="let todo of toDos$ | async; last as last">
     <hn-to-do [todo]="todo"></hn-to-do>
     <mat-divider [inset]="true" *ngIf="!last"></mat-divider>

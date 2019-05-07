@@ -1,63 +1,48 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { ToDoListService } from 'src/app/shared/services/to-do-list.service';
-import { HnBaseComponent } from 'src/app/shared/base-component';
+import { Component, ElementRef, NgZone, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ToDoFormComponent } from '../to-do-form/to-do-form.component';
-import { ScrollVisibilityService } from '../services/scroll-visibility.service';
-import { ToDoService } from '../services/to-do.service';
-import { ToDoList } from 'src/app/shared/model/to-do-list.model';
-import { ToDo } from 'src/app/shared/model/to-do.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { fromEvent } from 'rxjs';
+import { pluck } from 'rxjs/operators';
+import { ToDoListService } from 'src/app/shared/services/to-do-list.service';
+import { scrolledUp } from '../services/scroll-visibility.service';
+import { ToDoService } from '../services/to-do.service';
+import { TodoListBase } from '../todo-list-base';
+import { addButtonVisible } from 'src/app/shared/animations/add-button.animation';
 
 @Component({
   selector: 'hn-to-do-list',
   templateUrl: './to-do-list.component.html',
   styleUrls: ['./to-do-list.component.scss'],
+  animations: [addButtonVisible],
 })
-export class ToDoListComponent extends HnBaseComponent implements OnInit {
+export class ToDoListComponent extends TodoListBase implements OnInit {
   constructor(
-    private _toDoListService: ToDoListService,
-    private _toDoService: ToDoService,
-    private _dialog: MatDialog,
-    private _scrollVisibilityService: ScrollVisibilityService,
-    private _route: ActivatedRoute,
-    private _router: Router
+    _toDoListService: ToDoListService,
+    _toDoService: ToDoService,
+    _dialog: MatDialog,
+    _route: ActivatedRoute,
+    _router: Router,
+    private _ngZone: NgZone,
+    private _elementRef: ElementRef
   ) {
-    super();
-  }
-
-  isAddVisible = true;
-  focusTodoListName = false;
-  toDos: ToDo[];
-  toDoList: ToDoList;
-
-  @HostListener('scroll', ['$event'])
-  onScroll($event: Event) {
-    this.isAddVisible = this._scrollVisibilityService.isVisible($event);
+    super(_toDoListService, _toDoService, _dialog, _route, _router);
   }
 
   ngOnInit() {
-    this._route.queryParams.subscribe(query => {
-      this.toDoList = this._toDoListService.get(+query.toDoListId);
-      if (!this.toDoList) {
-        this._router.navigate(['/home']);
-        return;
-      }
-      this.toDos = this._toDoService.getAllByToDoListId(+query.toDoListId);
-    });
-  }
-
-  onAdd() {
-    this._dialog
-      .open(ToDoFormComponent, {
-        width: '250px',
-      })
-      .afterClosed()
-      .subscribe(data => {
-        if (data) {
-          this._toDoService.add(new ToDo(0, this.toDoList.id, data.description));
-          this.toDos = this._toDoService.getAllByToDoListId(this.toDoList.id);
-        }
-      });
+    super.ngOnInit();
+    // Az angular zónáján kívül iratkozunk fel a scrollra
+    this._ngZone.runOutsideAngular(() =>
+      this._subscriptions.add(
+        fromEvent(this._elementRef.nativeElement, 'scroll')
+          .pipe(
+            pluck('target'),
+            scrolledUp()
+          )
+          .subscribe(val => {
+            // Az angular zónáján belül adunk neki értéket.
+            this._ngZone.run(() => (this.isAddVisible = val));
+          })
+      )
+    );
   }
 }
