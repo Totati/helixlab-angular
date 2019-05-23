@@ -1,10 +1,9 @@
-import { Component, ViewChildren, ViewChild, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable, combineLatest } from 'rxjs';
-import { map, filter, withLatestFrom } from 'rxjs/operators';
-import { MatDialog, MatSidenav } from '@angular/material';
-import { AboutApplicationComponent } from '../about-application/about-application.component';
-import { Router, NavigationEnd } from '@angular/router';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material';
+import { NavigationStart, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { filter, map, withLatestFrom } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navigation',
@@ -21,7 +20,7 @@ export class NavigationComponent implements OnDestroy {
 
   subscription = this.router.events
     .pipe(
-      filter(event => event instanceof NavigationEnd),
+      filter(event => event instanceof NavigationStart),
       withLatestFrom(this.isHandset$, (event, isHandset) => isHandset),
       filter(isHandset => isHandset)
     )

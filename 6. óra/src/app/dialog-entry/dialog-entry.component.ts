@@ -5,15 +5,10 @@ import { ComponentType } from '@angular/cdk/portal';
 
 @Component({
   selector: 'app-dialog-entry',
-  templateUrl: './dialog-entry.component.html',
-  styleUrls: ['./dialog-entry.component.css']
+  template: '',
 })
-export class DialogEntryComponent implements OnInit {
-
-  constructor(private dialogService: MatDialog, private route: ActivatedRoute) { }
-
-  ngOnInit() {
-    this.dialogService.open(this.route.snapshot.data.component as ComponentType<any>);
+export class DialogEntryComponent {
+  constructor(private dialogService: MatDialog, private route: ActivatedRoute) {
+    this.dialogService.open(this.route.snapshot.data.component as ComponentType<any>, {...this.route.snapshot.data.config});
   }
-
 }

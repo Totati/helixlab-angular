@@ -5,6 +5,7 @@ import { UserComponent } from './user/user.component';
 import { DialogEntryComponent } from './dialog-entry/dialog-entry.component';
 import { AboutApplicationComponent } from './about-application/about-application.component';
 import { UserPreloadService } from './user-preload.service';
+import { MatDialogConfig } from '@angular/material';
 
 const routes: Routes = [
   {
@@ -15,7 +16,12 @@ const routes: Routes = [
   {
     path: 'about',
     component: DialogEntryComponent,
-    data: {component: AboutApplicationComponent}
+    data: {
+      component: AboutApplicationComponent,
+      config: {
+        width: '400px'
+      } as MatDialogConfig
+    }
   },
   {
     path: '**',
@@ -24,7 +30,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
