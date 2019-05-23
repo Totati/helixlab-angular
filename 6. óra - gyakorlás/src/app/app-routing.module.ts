@@ -14,6 +14,11 @@ const routes: Routes = [
     resolve: [UserPreloadService]
   },
   {
+    path: 'auth/user/:id',
+    component: UserComponent,
+    resolve: [UserPreloadService]
+  },
+  {
     path: 'about',
     component: DialogEntryComponent,
     data: {

@@ -1,14 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ComponentType } from '@angular/cdk/portal';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-dialog-entry',
-  template: '',
+  template: ''
 })
 export class DialogEntryComponent {
-  constructor(private dialogService: MatDialog, private route: ActivatedRoute) {
-    this.dialogService.open(this.route.snapshot.data.component as ComponentType<any>, {...this.route.snapshot.data.config});
+  constructor(
+    private _dialogService: MatDialog,
+    private _route: ActivatedRoute,
+    private _router: Router
+  ) {
+    this._dialogService
+      .open(this._route.snapshot.data.component as ComponentType<any>, {
+        ...this._route.snapshot.data.config
+      })
+      .afterClosed()
+      .subscribe(() => {
+        this._router.navigate(['..']);
+      });
   }
 }
