@@ -1,17 +1,26 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { LayoutModule } from '@angular/cdk/layout';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-
+import {
+  MatButtonModule,
+  MatDialogModule,
+  MatIconModule,
+  MatListModule,
+  MatProgressSpinnerModule,
+  MatSidenavModule,
+  MatSpinner,
+  MatToolbarModule
+} from '@angular/material';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AboutApplicationComponent } from './about-application/about-application.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavigationComponent } from './navigation/navigation.component';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatDialogModule } from '@angular/material';
-import { AboutApplicationComponent } from './about-application/about-application.component';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { HttpClientModule } from '@angular/common/http';
-import { UserComponent } from './user/user.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { DialogEntryComponent } from './dialog-entry/dialog-entry.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +29,8 @@ import { DialogEntryComponent } from './dialog-entry/dialog-entry.component';
     AboutApplicationComponent,
     NotFoundComponent,
     UserComponent,
-    DialogEntryComponent
+    DialogEntryComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -33,10 +43,15 @@ import { DialogEntryComponent } from './dialog-entry/dialog-entry.component';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [AboutApplicationComponent]
+  entryComponents: [
+    AboutApplicationComponent,
+    ConfirmDialogComponent,
+    MatSpinner
+  ]
 })
-export class AppModule { }
+export class AppModule {}

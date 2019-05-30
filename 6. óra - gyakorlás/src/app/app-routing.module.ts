@@ -6,6 +6,7 @@ import { DialogEntryComponent } from './dialog-entry/dialog-entry.component';
 import { AboutApplicationComponent } from './about-application/about-application.component';
 import { UserPreloadService } from './user-preload.service';
 import { MatDialogConfig } from '@angular/material';
+import { UserGuard } from './user.guard';
 
 const routes: Routes = [
   {
@@ -16,7 +17,8 @@ const routes: Routes = [
   {
     path: 'auth/user/:id',
     component: UserComponent,
-    resolve: [UserPreloadService]
+    resolve: [UserPreloadService],
+    canActivate: [UserGuard]
   },
   {
     path: 'about',

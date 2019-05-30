@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ComponentType } from '@angular/cdk/portal';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ComponentType } from '@angular/cdk/portal';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-dialog-entry',
